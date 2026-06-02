@@ -1,0 +1,90 @@
+graph TD
+
+%% =====================================
+%% Identity Trust Domain
+%% =====================================
+
+Customer -->|has| Identity
+Customer -->|has| MobileNumber
+Customer -->|owns| Account
+
+%% =====================================
+%% Access Trust Domain
+%% =====================================
+
+Customer -->|uses| Device
+
+Device -->|has| DeviceFingerprint
+Device -->|creates| Session
+
+Session -->|uses| Channel
+
+%% =====================================
+%% Financial Trust Domain
+%% =====================================
+
+Account -->|has| Card
+Account -->|performs| Transaction
+
+Transaction -->|references| Merchant
+Transaction -->|targets| Beneficiary
+
+Transaction -->|originates from| Device
+Transaction -->|occurs through| Channel
+
+%% =====================================
+%% Detection Domain
+%% =====================================
+
+Transaction -->|may generate| FraudAlert
+
+FraudAlert -->|opens| FraudCase
+
+%% =====================================
+%% Governance Domain
+%% =====================================
+
+FraudAnalyst -->|investigates| FraudCase
+
+FraudCase -->|investigates| Transaction
+FraudCase -->|has| Investigation
+FraudCase -->|has| RiskScore
+
+Investigation -->|produces| Decision
+
+%% =====================================
+%% Policy Domain
+%% =====================================
+
+Policy -->|governs| Decision
+
+RiskScore -->|supports| Decision
+
+%% =====================================
+%% Action Domain
+%% =====================================
+
+Decision -->|authorizes| TypedAction
+
+TypedAction --> FreezeAccount
+TypedAction --> BlockCard
+TypedAction --> RequestHumanApproval
+TypedAction --> NotifyCustomer
+
+%% =====================================
+%% Styling
+%% =====================================
+
+classDef identity fill:#d6eaf8,stroke:#2980b9;
+classDef access fill:#d5f5e3,stroke:#27ae60;
+classDef financial fill:#fcf3cf,stroke:#d4ac0d;
+classDef governance fill:#fadbd8,stroke:#c0392b;
+classDef policy fill:#f5eef8,stroke:#8e44ad;
+classDef action fill:#fdebd0,stroke:#d35400;
+
+class Customer,Identity,MobileNumber identity;
+class Device,DeviceFingerprint,Session,Channel access;
+class Account,Card,Transaction,Merchant,Beneficiary financial;
+class FraudAlert,FraudCase,Investigation,FraudAnalyst,RiskScore,Decision governance;
+class Policy policy;
+class TypedAction,FreezeAccount,BlockCard,RequestHumanApproval,NotifyCustomer action;

@@ -1,0 +1,22 @@
+graph TD
+
+Customer -->|owns| Account
+Customer -->|uses| Device
+Customer -->|has| Identity
+Customer -->|has| MobileNumber
+
+Account -->|has| Card
+Account -->|performs| Transaction
+
+Transaction -->|references| Merchant
+Transaction -->|targets| Beneficiary
+Transaction -->|occurs through| Channel
+Transaction -->|originates from| Device
+
+FraudCase -->|investigates| Transaction
+FraudCase -->|has| RiskScore
+FraudCase -->|has| Investigation
+
+FraudAnalyst -->|investigates| FraudCase
+
+Investigation -->|produces| Decision

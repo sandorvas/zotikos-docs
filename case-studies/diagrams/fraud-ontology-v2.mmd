@@ -1,0 +1,58 @@
+graph TD
+
+%% -------------------------
+%% Identity Trust Domain
+%% -------------------------
+
+Customer -->|has| Identity
+Customer -->|has| MobileNumber
+Customer -->|owns| Account
+
+%% -------------------------
+%% Access Trust Domain
+%% -------------------------
+
+Customer -->|uses| Device
+Device -->|has| DeviceFingerprint
+Device -->|creates| Session
+
+Session -->|uses| Channel
+
+%% -------------------------
+%% Financial Trust Domain
+%% -------------------------
+
+Account -->|has| Card
+Account -->|performs| Transaction
+
+Transaction -->|references| Merchant
+Transaction -->|targets| Beneficiary
+
+Transaction -->|originates from| Device
+Transaction -->|occurs through| Channel
+
+%% -------------------------
+%% Detection Domain
+%% -------------------------
+
+Transaction -->|may generate| Alert
+
+Alert -->|opens| FraudCase
+
+%% -------------------------
+%% Governance Domain
+%% -------------------------
+
+FraudAnalyst -->|investigates| FraudCase
+
+FraudCase -->|investigates| Transaction
+FraudCase -->|has| Investigation
+FraudCase -->|has| RiskScore
+
+Investigation -->|produces| Decision
+
+%% -------------------------
+%% Risk Domain
+%% -------------------------
+
+RiskScore -->|supports| Decision

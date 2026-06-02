@@ -1,0 +1,29 @@
+flowchart TD
+    A[Enterprise Event / User Request] --> B[LLM Analysis Layer]
+
+    B --> C[Proposed Typed Action]
+
+    C --> D[Control Plane / FSM Orchestrator]
+
+    D --> E[Policy Engine]
+    E --> F{Action Allowed?}
+
+    F -- No --> G[Reject / Escalate / Ask Human]
+    F -- Yes --> H{Human Approval Required?}
+
+    H -- Yes --> I[Human Approval Workflow]
+    I --> J[Approved Typed Action]
+
+    H -- No --> J[Approved Typed Action]
+
+    J --> K[Enterprise Execution System]
+
+    K --> L[Audit Trail / Observability]
+
+    D --> L
+    E --> L
+    I --> L
+
+    M[Ontology / Semantic Contract] --> B
+    M --> D
+    M --> E
