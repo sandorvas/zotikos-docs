@@ -1,0 +1,22 @@
+stateDiagram-v2
+
+    [*] --> Created
+
+    Created --> Assigned
+
+    Assigned --> Investigating
+
+    Investigating --> AwaitingApproval
+    Investigating --> Closed
+
+    AwaitingApproval --> Approved
+    AwaitingApproval --> Rejected
+
+    Rejected --> Investigating
+    Rejected --> Closed
+
+    Approved --> ExecutingAction
+
+    ExecutingAction --> Closed
+
+    Closed --> [*]

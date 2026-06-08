@@ -1,0 +1,22 @@
+stateDiagram-v2
+
+    [*] --> Created
+
+    Created --> Assigned : AssignCase
+
+    Assigned --> Investigating : StartInvestigation
+
+    Investigating --> AwaitingApproval : SubmitRecommendation
+    Investigating --> Closed : CloseCase
+
+    AwaitingApproval --> Approved : ApproveCase
+    AwaitingApproval --> Rejected : RejectCase
+
+    Rejected --> Investigating : ReopenCase
+    Rejected --> Closed : CloseCase
+
+    Approved --> ExecutingAction : ExecuteAction
+
+    ExecutingAction --> Closed : ActionCompleted
+
+    Closed --> [*]
