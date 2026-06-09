@@ -1,0 +1,23 @@
+flowchart TB
+
+subgraph CP["Enterprise Control Plane"]
+    ONT["Ontology"]
+    FSM["FSM"]
+    EVT["Events"]
+    ACT["Actors"]
+    POL["Policies"]
+    TA["Typed Actions"]
+end
+
+CORE["Governed Enterprise Execution"]
+
+LLM --> CP
+
+ONT --> CORE
+FSM --> CORE
+EVT --> CORE
+ACT --> CORE
+POL --> CORE
+TA --> CORE
+
+CORE --> SYS["Enterprise Systems"]
