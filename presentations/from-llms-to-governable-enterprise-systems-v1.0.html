@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>from-llms-to-governable-enterprise-systems_v2</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="from-llms-to-governable-enterprise-systems">From LLMs to
+Governable Enterprise Systems</h1>
+<h2 id="a-zotikos-perspective-on-enterprise-ai-control-planes">A Zotikos
+Perspective on Enterprise AI Control Planes</h2>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>Large Language Models (LLMs) are introducing powerful new
+capabilities into enterprise software systems. They can interpret
+information, generate recommendations, assist human operators, and
+automate knowledge-intensive tasks.</p>
+<p>Many modern AI architectures, however, take the additional step of
+allowing LLMs to directly control enterprise workflows, invoke tools,
+execute actions, and make operational decisions.</p>
+<p>This creates a fundamental architectural challenge.</p>
+<p>LLMs are probabilistic systems.</p>
+<p>Enterprise systems require deterministic governance.</p>
+<p>Zotikos proposes an alternative architecture in which AI participates
+in enterprise processes without directly controlling enterprise
+execution.</p>
+<p>The architecture combines:</p>
+<ul>
+<li>Enterprise Ontologies</li>
+<li>Finite State Machines (FSMs)</li>
+<li>Explicit Events</li>
+<li>Actors</li>
+<li>Policy Enforcement</li>
+<li>Typed Enterprise Actions</li>
+<li>Human Approval Workflows</li>
+</ul>
+<p>These components operate together within an Enterprise Control
+Plane.</p>
+<p>The result is a Governable Enterprise System that preserves
+governance, auditability, compliance, and operational control while
+still benefiting from modern AI capabilities.</p>
+<hr />
+<h2 id="about-zotikos">About Zotikos</h2>
+<p>Zotikos is an architectural approach for building governable
+enterprise AI systems.</p>
+<p>Rather than treating AI as an autonomous decision maker, Zotikos
+places AI within a governed enterprise control plane composed of
+ontologies, finite state machines, events, actors, policies, and typed
+actions.</p>
+<p>The objective is not to restrict AI capabilities.</p>
+<p>The objective is to ensure that enterprise execution remains
+deterministic, explainable, auditable, and governable.</p>
+<p>The Zotikos approach separates reasoning from control.</p>
+<p>AI systems may analyse information, generate recommendations,
+identify patterns, and assist human operators.</p>
+<p>Enterprise governance remains responsible for approvals, policy
+enforcement, state transitions, and operational execution.</p>
+<p>This separation enables organizations to benefit from AI capabilities
+while preserving accountability and control.</p>
+<p>AI participates in enterprise processes.</p>
+<p>Enterprise governance remains in control.</p>
+<hr />
+<h2 id="the-problem">1. The Problem</h2>
+<p>Most modern agentic AI architectures allow LLMs to:</p>
+<ul>
+<li>Trigger workflows</li>
+<li>Execute actions</li>
+<li>Coordinate systems</li>
+<li>Make operational decisions</li>
+<li>Interact with enterprise applications</li>
+</ul>
+<p>While these capabilities appear attractive, they introduce
+significant risks.</p>
+<p>LLMs are probabilistic systems.</p>
+<p>Enterprise systems require deterministic governance.</p>
+<p>This mismatch creates a fundamental architectural problem.</p>
+<hr />
+<h2 id="why-agentic-ai-is-dangerous">2. Why Agentic AI Is Dangerous</h2>
+<p>Current agentic architectures frequently permit AI systems to:</p>
+<ul>
+<li>Invoke tools directly</li>
+<li>Execute transactions</li>
+<li>Modify records</li>
+<li>Trigger workflows</li>
+<li>Coordinate external services</li>
+</ul>
+<p>This introduces:</p>
+<ul>
+<li>Hallucinated actions</li>
+<li>Unpredictable behaviour</li>
+<li>Policy violations</li>
+<li>Weak auditability</li>
+<li>Compliance challenges</li>
+<li>Operational risk</li>
+</ul>
+<p>The issue is not that LLMs are unreliable.</p>
+<p>The issue is that enterprise control has been delegated to components
+that were never designed to function as enterprise control systems.</p>
+<hr />
+<h2 id="llm-as-an-untrusted-component">3. LLM as an Untrusted
+Component</h2>
+<p>Zotikos treats the LLM as an untrusted component.</p>
+<p>The LLM may:</p>
+<ul>
+<li>Interpret information</li>
+<li>Classify information</li>
+<li>Generate recommendations</li>
+<li>Assist human operators</li>
+</ul>
+<p>The LLM may not:</p>
+<ul>
+<li>Execute enterprise actions directly</li>
+<li>Modify enterprise state directly</li>
+<li>Bypass governance controls</li>
+</ul>
+<p>All enterprise execution remains controlled by the Enterprise Control
+Plane.</p>
+<hr />
+<h2 id="enterprise-ontologies">4. Enterprise Ontologies</h2>
+<p>Enterprise systems operate on business concepts rather than
+prompts.</p>
+<p>Examples include:</p>
+<ul>
+<li>Customer</li>
+<li>Policy</li>
+<li>Claim</li>
+<li>Payment</li>
+<li>Fraud Case</li>
+<li>Investigation</li>
+<li>Decision</li>
+</ul>
+<p>An enterprise ontology defines these concepts and their
+relationships.</p>
+<p>Unlike prompts, ontologies provide:</p>
+<ul>
+<li>Explicit meaning</li>
+<li>Consistent terminology</li>
+<li>Traceable relationships</li>
+<li>Shared understanding across systems</li>
+</ul>
+<p>The ontology becomes the semantic foundation of the Enterprise
+Control Plane.</p>
+<hr />
+<h2 id="finite-state-machines">5. Finite State Machines</h2>
+<p>Enterprise processes are governed by state transitions.</p>
+<p>A fraud investigation, for example, may progress through states such
+as:</p>
+<ul>
+<li>Created</li>
+<li>Assigned</li>
+<li>Investigating</li>
+<li>Awaiting Approval</li>
+<li>Approved</li>
+<li>Rejected</li>
+<li>Executing Action</li>
+<li>Closed</li>
+</ul>
+<p>Finite State Machines (FSMs) provide deterministic control over these
+transitions.</p>
+<p>Unlike LLM-generated workflows, FSMs ensure that only valid
+transitions can occur.</p>
+<p>The FSM becomes the behavioural model of the enterprise process.</p>
+<hr />
+<h2 id="events">6. Events</h2>
+<p>State transitions occur because events happen.</p>
+<p>Examples include:</p>
+<ul>
+<li>AssignCase</li>
+<li>StartInvestigation</li>
+<li>SubmitRecommendation</li>
+<li>ApproveCase</li>
+<li>RejectCase</li>
+<li>ExecuteAction</li>
+</ul>
+<p>Events provide explicit and auditable explanations for why a system
+changed state.</p>
+<p>Every state transition must be triggered by a recognised event.</p>
+<p>This creates a complete and traceable history of enterprise
+execution.</p>
+<hr />
+<h2 id="actors">7. Actors</h2>
+<p>Enterprise systems do not operate autonomously.</p>
+<p>Every significant decision originates from an actor.</p>
+<p>Actors may include:</p>
+<ul>
+<li>Human operators</li>
+<li>Investigators</li>
+<li>Supervisors</li>
+<li>Governance officers</li>
+<li>External systems</li>
+<li>Automated services</li>
+</ul>
+<p>Actors provide accountability.</p>
+<p>An event without an actor lacks ownership.</p>
+<p>By explicitly modelling actors, the Enterprise Control Plane can
+answer:</p>
+<ul>
+<li>Who initiated the action?</li>
+<li>Who approved the decision?</li>
+<li>Who bears responsibility?</li>
+</ul>
+<hr />
+<h2 id="policies">8. Policies</h2>
+<p>Policies define the rules under which enterprise actions may
+occur.</p>
+<p>Examples include:</p>
+<ul>
+<li>Approval limits</li>
+<li>Risk thresholds</li>
+<li>Regulatory requirements</li>
+<li>Segregation of duties</li>
+<li>Business rules</li>
+</ul>
+<p>Policies operate independently from the LLM.</p>
+<p>The LLM may recommend an action.</p>
+<p>The policy engine determines whether the action is permitted.</p>
+<p>This separation ensures that governance remains deterministic and
+auditable.</p>
+<hr />
+<h2 id="typed-enterprise-actions">9. Typed Enterprise Actions</h2>
+<p>Enterprise systems ultimately perform actions.</p>
+<p>Examples include:</p>
+<ul>
+<li>FreezeAccount</li>
+<li>BlockCard</li>
+<li>RejectClaim</li>
+<li>ApprovePayment</li>
+<li>NotifyCustomer</li>
+</ul>
+<p>These actions must be explicit, typed, and governed.</p>
+<p>The LLM never executes arbitrary actions.</p>
+<p>Instead, it recommends one or more predefined enterprise actions.</p>
+<p>The Enterprise Control Plane validates the recommendation against the
+ontology, FSM, actors, and policies before execution.</p>
+<hr />
+<h2 id="enterprise-control-plane">10. Enterprise Control Plane</h2>
+<figure>
+<img src="../diagrams/control-plane/enterprise-control-plane-v1.svg"
+alt="Enterprise Control Plane" />
+<figcaption aria-hidden="true">Enterprise Control Plane</figcaption>
+</figure>
+<p>The Enterprise Control Plane is the governing layer that coordinates
+enterprise execution.</p>
+<p>It sits between AI reasoning components and operational systems.</p>
+<p>The control plane combines:</p>
+<ul>
+<li>Enterprise Ontologies</li>
+<li>Finite State Machines</li>
+<li>Events</li>
+<li>Actors</li>
+<li>Policies</li>
+<li>Typed Enterprise Actions</li>
+</ul>
+<p>Together these components provide deterministic governance over
+enterprise operations.</p>
+<p>The control plane does not replace AI.</p>
+<p>It governs AI participation.</p>
+<hr />
+<h2 id="reference-implementation-fraud-investigation">11. Reference
+Implementation: Fraud Investigation</h2>
+<p>Consider a fraud investigation process.</p>
+<p>A new fraud case enters the system in the Created state.</p>
+<p>A Fraud Analyst assigns the case and begins an investigation.</p>
+<p>The investigation generates evidence and recommendations.</p>
+<p>Once sufficient evidence has been collected, the analyst submits a
+recommendation for approval.</p>
+<p>A Governance Officer evaluates the recommendation according to
+enterprise policies.</p>
+<p>If approved, the system executes one or more typed actions such
+as:</p>
+<ul>
+<li>FreezeAccount</li>
+<li>BlockCard</li>
+<li>EscalateInvestigation</li>
+<li>NotifyCustomer</li>
+</ul>
+<p>Throughout the process:</p>
+<ul>
+<li>Every object is defined by the ontology.</li>
+<li>Every state change is controlled by the FSM.</li>
+<li>Every transition is triggered by an event.</li>
+<li>Every event is associated with an actor.</li>
+<li>Every decision is evaluated against policies.</li>
+<li>Every execution occurs through typed actions.</li>
+</ul>
+<p>The LLM may assist by analysing evidence, identifying patterns, or
+generating recommendations.</p>
+<p>However, the LLM never directly controls enterprise execution.</p>
+<hr />
+<h2 id="benefits">12. Benefits</h2>
+<h3 id="deterministic-execution">Deterministic Execution</h3>
+<p>Enterprise behaviour is governed by explicit state transitions rather
+than probabilistic model outputs.</p>
+<h3 id="auditability">Auditability</h3>
+<p>Every decision, event, actor, state transition, and action can be
+traced and reviewed.</p>
+<h3 id="compliance">Compliance</h3>
+<p>Policies can be enforced consistently across all enterprise
+workflows.</p>
+<h3 id="explainability">Explainability</h3>
+<p>The system can explain why decisions were made and which policies
+were applied.</p>
+<h3 id="human-governance">Human Governance</h3>
+<p>Critical decisions remain subject to human oversight and
+approval.</p>
+<h3 id="ai-safety">AI Safety</h3>
+<p>The LLM cannot directly execute uncontrolled enterprise actions.</p>
+<h3 id="enterprise-reusability">Enterprise Reusability</h3>
+<p>The same control plane concepts can be applied across fraud, claims,
+payments, onboarding, KYC, AML, underwriting, healthcare,
+telecommunications, and government services.</p>
+<hr />
+<h2 id="conclusion">13. Conclusion</h2>
+<p>The future of enterprise AI is not autonomous execution.</p>
+<p>It is governed execution.</p>
+<p>Large Language Models are powerful reasoning engines, but they are
+not enterprise control systems.</p>
+<p>Enterprises have spent decades building governance structures,
+approval processes, audit controls, compliance frameworks, and
+operational safeguards.</p>
+<p>AI adoption should strengthen these capabilities rather than bypass
+them.</p>
+<p>The challenge is not how to make AI more autonomous.</p>
+<p>The challenge is how to make AI more governable.</p>
+<p>By combining enterprise ontologies, finite state machines, events,
+actors, policies, and typed actions within a unified Enterprise Control
+Plane, organizations can safely integrate AI into mission-critical
+operations while maintaining deterministic governance and operational
+control.</p>
+<p>Zotikos proposes that enterprise AI should not be built around
+autonomous agents.</p>
+<p>It should be built around governable enterprise systems.</p>
+<p>AI should participate in enterprise execution.</p>
+<p>Enterprise governance should remain in control.</p>
+<hr />
+<h2 id="references">14. References</h2>
+<p>Supporting Zotikos artifacts:</p>
+<ul>
+<li>LLM as an Untrusted Component</li>
+<li>Fraud Ontology v1-v4</li>
+<li>Fraud FSM v1-v4</li>
+<li>Enterprise Control Plane Diagram v1</li>
+</ul>
+<p>These supporting artifacts provide reference implementations and
+practical examples of the architectural principles described in this
+paper.</p>
+<hr />
+<h2 id="about-the-author">About the Author</h2>
+<p>Sandor Vas is a Principal Systems Architect with experience spanning
+embedded systems, high-performance computing, banking infrastructure,
+cloud-native platforms, data engineering, distributed systems, and AI
+governance.</p>
+<p>Through Zotikos Consulting, he focuses on building governable
+enterprise systems that combine modern AI capabilities with
+deterministic operational control, auditability, and compliance.</p>
+</body>
+</html>
