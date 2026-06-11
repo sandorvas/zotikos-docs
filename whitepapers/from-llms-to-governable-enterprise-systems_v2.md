@@ -266,7 +266,8 @@ The Enterprise Control Plane validates the recommendation against the ontology, 
 
 ## 10. Enterprise Control Plane
 
-[Keep your existing Mermaid diagram here]
+![Enterprise Control Plane](../diagrams/control-plane/enterprise-control-plane-v1.svg)
+
 
 The Enterprise Control Plane is the governing layer that coordinates enterprise execution.
 
@@ -291,7 +292,37 @@ It governs AI participation.
 
 ## 11. Reference Implementation: Fraud Investigation
 
-[Keep your current fraud investigation section.]
+Consider a fraud investigation process.
+
+A new fraud case enters the system in the Created state.
+
+A Fraud Analyst assigns the case and begins an investigation.
+
+The investigation generates evidence and recommendations.
+
+Once sufficient evidence has been collected, the analyst submits a recommendation for approval.
+
+A Governance Officer evaluates the recommendation according to enterprise policies.
+
+If approved, the system executes one or more typed actions such as:
+
+- FreezeAccount
+- BlockCard
+- EscalateInvestigation
+- NotifyCustomer
+
+Throughout the process:
+
+- Every object is defined by the ontology.
+- Every state change is controlled by the FSM.
+- Every transition is triggered by an event.
+- Every event is associated with an actor.
+- Every decision is evaluated against policies.
+- Every execution occurs through typed actions.
+
+The LLM may assist by analysing evidence, identifying patterns, or generating recommendations.
+
+However, the LLM never directly controls enterprise execution.
 
 ---
 
